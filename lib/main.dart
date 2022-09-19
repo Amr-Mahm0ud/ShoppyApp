@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:shoppy/logic/controllers/welcome_screen_controller.dart';
+import 'package:shoppy/utils/themes.dart';
 
 import 'view/screens/welcome.dart';
 
@@ -11,11 +14,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: const WelcomeScreen());
+    return GetMaterialApp(
+      title: 'Flutter Demo',
+      theme: Themes.lightTheme,
+      darkTheme: Themes.darkTheme,
+      debugShowCheckedModeBanner: false,
+      onInit: () {
+        Get.put(WelcomeScreenController());
+      },
+      home: const WelcomeScreen(),
+    );
   }
 }
