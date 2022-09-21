@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:shoppy/bindings/auth_binding.dart';
+
+import 'package:shoppy/utils/consts.dart';
+import 'package:shoppy/utils/themes.dart';
+import 'package:shoppy/view/widgets/custom_button.dart';
 
 import '../../logic/controllers/welcome_screen_controller.dart';
 import 'auth/sign_up_screen.dart';
@@ -10,27 +14,14 @@ class WelcomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    WelcomeScreenController controller = Get.find();
     return Scaffold(
-      appBar: AppBar(
-        actions: [
-          TextButton(
-            onPressed: () {
-              Get.off(
-                () => const SignUpScreen(),
-                transition: Transition.fadeIn,
-              );
-            },
-            child: const Text(
-              'skip',
-            ),
-          ),
-        ],
-      ),
       body: SafeArea(
         child: Stack(
           children: [
+            //page view
             GetBuilder<WelcomeScreenController>(
-              builder: (controller) => PageView.builder(
+              builder: (_) => PageView.builder(
                 scrollDirection: Axis.horizontal,
                 reverse: false,
                 itemCount: controller.images.length,
@@ -46,10 +37,10 @@ class WelcomeScreen extends StatelessWidget {
                 itemBuilder: (BuildContext context, int index) {
                   return Column(
                     children: [
-                      SizedBox(height: Get.height * 0.05),
+                      SizedBox(height: Get.height * 0.1),
                       Image.asset(
                         controller.images[controller.currentPage],
-                        scale: 4,
+                        height: Get.height * 0.4,
                       ),
                       const SizedBox(height: 30),
                       Text(
@@ -61,7 +52,6 @@ class WelcomeScreen extends StatelessWidget {
                       Text(
                         controller.texts[controller.currentPage],
                         style: Get.textTheme.headline6!.copyWith(
-                          color: Get.textTheme.headline4!.color,
                           fontWeight: FontWeight.normal,
                         ),
                         textAlign: TextAlign.center,
@@ -71,17 +61,18 @@ class WelcomeScreen extends StatelessWidget {
                 },
               ),
             ),
+            //indicator
             Align(
-              alignment: const Alignment(0, 0.375),
+              alignment: const Alignment(0, 0.45),
               child: Container(
-                width: 60,
+                width: 75,
                 height: 20,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
-                  color: Get.theme.cardColor,
+                  color: cardLight,
                 ),
                 child: GetBuilder<WelcomeScreenController>(
-                  builder: (controller) => AnimatedAlign(
+                  builder: (_) => AnimatedAlign(
                     alignment: controller.currentPage == 0
                         ? const Alignment(-1, 0)
                         : controller.currentPage == 1
@@ -90,7 +81,7 @@ class WelcomeScreen extends StatelessWidget {
                     duration: const Duration(milliseconds: 300),
                     child: AnimatedContainer(
                       duration: const Duration(milliseconds: 200),
-                      width: controller.isAnimating ? 40 : 20,
+                      width: controller.isAnimating ? 50 : 20,
                       height: 20,
                       decoration: BoxDecoration(
                         color: Get.theme.primaryColor,
@@ -102,45 +93,66 @@ class WelcomeScreen extends StatelessWidget {
               ),
             ),
             Align(
-              alignment: const Alignment(0, 0.85),
+              alignment: const Alignment(0, 0.675),
               child: GetBuilder<WelcomeScreenController>(
-                builder: (controller) {
-                  return CircularPercentIndicator(
-                    radius: Get.width * 0.12,
-                    animation: true,
-                    animateFromLastPercent: true,
-                    animationDuration: 300,
-                    center: FloatingActionButton(
-                      onPressed: controller.currentPage < 2
-                          ? () {
-                              int newVal = controller.currentPage + 1;
-                              controller.pageController.animateToPage(
-                                newVal,
-                                duration: const Duration(milliseconds: 300),
-                                curve: Curves.linear,
-                              );
-                            }
-                          : () {
-                              Get.off(
-                                () => const SignUpScreen(),
-                                transition: Transition.fadeIn,
-                              );
-                            },
-                      elevation: 0,
-                      backgroundColor: Get.theme.primaryColor,
-                      splashColor: Get.theme.scaffoldBackgroundColor,
-                      foregroundColor: Colors.white,
-                      child: controller.currentPage < 2
-                          ? const Icon(Icons.arrow_forward_rounded)
-                          : const Icon(Icons.arrow_forward_ios_rounded),
+                builder: (_) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: AnimatedSwitcher(
+                      duration: const Duration(milliseconds: 300),
+                      child: controller.currentPage == 2
+                          ? CustomButton(
+                              onTap: () {
+                                Get.off(
+                                  () => SignUpScreen(),
+                                  transition: Transition.rightToLeftWithFade,
+                                  binding: AuthBinding(),
+                                );
+                              },
+                              child: Text(
+                                'Get Started',
+                                style: Consts.customButtonTextStyle,
+                              ),
+                            )
+                          : Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                CustomButton(
+                                  width: Get.width * 0.4,
+                                  filled: false,
+                                  onTap: () {
+                                    Get.off(
+                                      () => SignUpScreen(),
+                                      transition:
+                                          Transition.rightToLeftWithFade,
+                                      binding: AuthBinding(),
+                                    );
+                                  },
+                                  child: Text(
+                                    'skip',
+                                    style: Get.textTheme.headline6!.copyWith(
+                                        color: Get.theme.primaryColor),
+                                  ),
+                                ),
+                                CustomButton(
+                                  width: Get.width * 0.4,
+                                  onTap: () {
+                                    int newVal = controller.currentPage + 1;
+                                    controller.pageController.animateToPage(
+                                      newVal,
+                                      duration:
+                                          const Duration(milliseconds: 300),
+                                      curve: Curves.linear,
+                                    );
+                                  },
+                                  child: Text(
+                                    'Next',
+                                    style: Consts.customButtonTextStyle,
+                                  ),
+                                ),
+                              ],
+                            ),
                     ),
-                    circularStrokeCap: CircularStrokeCap.round,
-                    lineWidth: 5,
-                    backgroundWidth: 2,
-                    progressColor: Get.theme.primaryColor,
-                    curve: Curves.easeIn,
-                    percent:
-                        (controller.currentPage + 1) / controller.images.length,
                   );
                 },
               ),

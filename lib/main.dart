@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:shoppy/logic/controllers/welcome_screen_controller.dart';
-import 'package:shoppy/utils/themes.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:shoppy/bindings/welcome_binding.dart';
+import 'package:shoppy/services/theme_services.dart';
+import '/utils/themes.dart';
 
 import 'view/screens/welcome.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
+  await GetStorage.init();
   runApp(const MyApp());
 }
 
@@ -15,14 +22,19 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
       theme: Themes.lightTheme,
       darkTheme: Themes.darkTheme,
-      debugShowCheckedModeBanner: false,
-      onInit: () {
-        Get.put(WelcomeScreenController());
-      },
-      home: const WelcomeScreen(),
+      themeMode: ThemeController().theme,
+      initialRoute: '/welcomeScreen',
+      getPages: [
+        GetPage(
+          name: '/welcomeScreen',
+          page: () => const WelcomeScreen(),
+          binding: WelcomeBinding(),
+        )
+      ],
+      defaultTransition: Transition.fadeIn,
     );
   }
 }

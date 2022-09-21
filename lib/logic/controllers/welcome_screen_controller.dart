@@ -15,7 +15,7 @@ class WelcomeScreenController extends GetxController {
   List texts = [
     'find your favorite products that\nyou want to buy easily',
     'pay for products you buy safely\nand easily',
-    'your product is delivered to your\nhome safely & securely',
+    'your product is delivered to your\nhome rapidly',
   ];
 
   PageController pageController = PageController(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 const Color primaryClr = Color(0xFFFD692E);
-const Color secondaryClr = Color(0xFFDA4621);
+const Color secondaryClr = Color(0xFF7577CD);
 const Color backGLight = Color(0xFFFFFFFF);
 const Color backGDark = Color(0xFF232528);
 const Color cardDark = Color(0xFF2F3641);
@@ -13,7 +13,7 @@ class Themes {
   static final lightTheme = ThemeData.light().copyWith(
     primaryColor: primaryClr,
     backgroundColor: backGLight,
-    splashColor: primaryClr,
+    splashColor: cardLight,
     brightness: Brightness.light,
     scaffoldBackgroundColor: backGLight,
     cardColor: cardLight,
@@ -29,7 +29,7 @@ class Themes {
   static final darkTheme = ThemeData.dark().copyWith(
     primaryColor: primaryClr,
     backgroundColor: backGDark,
-    splashColor: primaryClr,
+    splashColor: cardLight,
     brightness: Brightness.dark,
     scaffoldBackgroundColor: backGDark,
     cardColor: cardDark,
