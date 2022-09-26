@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shoppy/utils/consts.dart';
 
 Widget inputField({
   TextEditingController? controller,
@@ -23,7 +24,13 @@ Widget inputField({
     obscureText: obscure,
     onChanged: onChange,
     decoration: InputDecoration(
-      border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(Consts.borderRadius),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(Consts.borderRadius),
+        borderSide: BorderSide(color: Get.theme.cardColor, width: 1),
+      ),
       label: Text(label),
       prefixIcon: Icon(icon),
       suffixIcon: widget,

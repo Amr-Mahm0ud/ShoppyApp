@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shoppy/utils/consts.dart';
 import 'bouncing_animation.dart';
 
 class CustomButton extends StatelessWidget {
@@ -24,7 +25,7 @@ class CustomButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return BouncingAnimation(
       child: InkWell(
-        borderRadius: BorderRadius.circular(15),
+        borderRadius: BorderRadius.circular(Consts.borderRadius),
         onTap: onTap,
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 200),
@@ -41,7 +42,7 @@ class CustomButton extends StatelessWidget {
                     color: color ?? Get.theme.primaryColor,
                     width: 1,
                   ),
-            borderRadius: BorderRadius.circular(15),
+            borderRadius: BorderRadius.circular(Consts.borderRadius),
           ),
           child: child,
         ),

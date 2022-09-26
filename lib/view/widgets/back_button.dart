@@ -6,6 +6,6 @@ Widget backButton() {
     onPressed: () {
       Get.back();
     },
-    icon: const Icon(Icons.arrow_back_ios_new_sharp),
+    icon: const Icon(Icons.arrow_back_ios_new_rounded),
   );
 }

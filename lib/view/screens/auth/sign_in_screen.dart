@@ -73,7 +73,7 @@ class SignInScreen extends StatelessWidget {
                 const SizedBox(height: 30),
                 //email
                 inputField(
-                  icon: Icons.email_sharp,
+                  icon: Icons.email_rounded,
                   label: 'Email',
                   controller: emailController,
                   validator: (val) {
@@ -92,7 +92,7 @@ class SignInScreen extends StatelessWidget {
                 //password
                 GetBuilder<AuthController>(
                   builder: (controller) => inputField(
-                      icon: Icons.lock_sharp,
+                      icon: Icons.lock_clock_rounded,
                       label: 'password',
                       controller: passwordController,
                       validator: (val) {
@@ -110,8 +110,8 @@ class SignInScreen extends StatelessWidget {
                       widget: IconButton(
                         icon: Icon(
                           controller.obscure
-                              ? Icons.visibility_sharp
-                              : Icons.visibility_off_sharp,
+                              ? Icons.visibility_rounded
+                              : Icons.visibility_off_rounded,
                         ),
                         onPressed: () {
                           controller.changeVisibility();

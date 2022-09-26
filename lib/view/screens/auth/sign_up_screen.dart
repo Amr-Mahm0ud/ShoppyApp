@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:shoppy/logic/controllers/auth_controller.dart';
 import 'package:shoppy/utils/consts.dart';
 import '../../../bindings/main_binding.dart';
-import '../../../services/theme_services.dart';
 import '../home/main_screen.dart';
 import 'sign_in_screen.dart';
 import '../../widgets/auth/input_field.dart';
@@ -77,7 +76,7 @@ class SignUpScreen extends StatelessWidget {
                 const SizedBox(height: 30),
                 //username
                 inputField(
-                  icon: Icons.person_sharp,
+                  icon: Icons.person_rounded,
                   label: 'User Name',
                   controller: usernameController,
                   validator: (val) {
@@ -95,7 +94,7 @@ class SignUpScreen extends StatelessWidget {
                 const SizedBox(height: 15),
                 //email
                 inputField(
-                  icon: Icons.email_sharp,
+                  icon: Icons.email_rounded,
                   label: 'Email',
                   controller: emailController,
                   validator: (val) {
@@ -114,7 +113,7 @@ class SignUpScreen extends StatelessWidget {
                 //password
                 GetBuilder<AuthController>(
                   builder: (_) => inputField(
-                      icon: Icons.lock_sharp,
+                      icon: Icons.lock_rounded,
                       label: 'password',
                       controller: passwordController,
                       validator: (val) {
@@ -132,8 +131,8 @@ class SignUpScreen extends StatelessWidget {
                       widget: IconButton(
                         icon: Icon(
                           controller.obscure
-                              ? Icons.visibility_sharp
-                              : Icons.visibility_off_sharp,
+                              ? Icons.visibility_rounded
+                              : Icons.visibility_off_rounded,
                         ),
                         onPressed: () {
                           controller.changeVisibility();
@@ -147,7 +146,7 @@ class SignUpScreen extends StatelessWidget {
                     children: [
                       Checkbox(
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5),
+                          borderRadius: BorderRadius.circular(2),
                         ),
                         onChanged: (bool? value) {
                           controller.changeAcceptTerms();
@@ -179,6 +178,16 @@ class SignUpScreen extends StatelessWidget {
                     },
                   );
                 }),
+                ElevatedButton(
+                  onPressed: () {
+                    Get.off(
+                      () => const MainScreen(),
+                      transition: Transition.size,
+                      binding: MainBinding(),
+                    );
+                  },
+                  child: const Text('Next'),
+                )
               ],
             ),
           ),

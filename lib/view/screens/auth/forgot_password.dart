@@ -39,7 +39,7 @@ class ForgotPasswordScreen extends StatelessWidget {
               SizedBox(height: Get.height * 0.05),
               inputField(
                 key: inputKey,
-                icon: Icons.email_sharp,
+                icon: Icons.email_rounded,
                 label: 'Email',
                 controller: emailController,
                 validator: (val) {

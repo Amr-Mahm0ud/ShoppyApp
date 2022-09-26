@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class Consts {
+  static double borderRadius = 5;
+
   static final TextStyle customButtonTextStyle =
       Get.textTheme.headline6!.copyWith(color: Colors.white);
 
@@ -11,7 +13,7 @@ class Consts {
       message,
       backgroundColor: Get.theme.errorColor.withOpacity(0.8),
       barBlur: 10,
-      borderRadius: 15,
+      borderRadius: Consts.borderRadius,
       colorText: Colors.white,
       icon: const Icon(
         Icons.error,
@@ -38,7 +40,7 @@ class Consts {
       barBlur: 10,
       colorText: Colors.white,
       maxWidth: Get.width * 0.5,
-      borderRadius: 15,
+      borderRadius: Consts.borderRadius,
       backgroundColor: Get.theme.colorScheme.tertiary.withOpacity(0.7),
       duration: duration,
     );
