@@ -5,7 +5,6 @@ import 'package:shoppy/view/screens/home/bottom_bar/home_screen.dart';
 import 'package:shoppy/view/screens/home/bottom_bar/profile_screen.dart';
 import 'package:shoppy/view/screens/home/bottom_bar/wishlist_screen.dart';
 
-import '../../view/screens/home/bottom_bar/categories.dart';
 
 class MainController extends GetxController {
   RxInt currentPage = 0.obs;
@@ -15,15 +14,13 @@ class MainController extends GetxController {
   List<Widget> pages = [
     const HomeScreen(),
     const DiscoverScreen(),
-    const CategoriesScreen(),
     const WishListScreen(),
     const ProfileScreen(),
   ];
 
   List<String> titles = [
-    'Home',
+    'Shoppy',
     'Discover',
-    'Categories',
     'Wish List',
     'Profile',
   ];

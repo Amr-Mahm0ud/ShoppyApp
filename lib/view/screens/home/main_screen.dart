@@ -14,21 +14,21 @@ class MainScreen extends StatelessWidget {
       () => Scaffold(
         extendBody: true,
         appBar: AppBar(
-          leading: Padding(
-            padding: const EdgeInsets.all(10),
-            child: GestureDetector(
-              onTap: () {
-                controller.pageController.animateToPage(
-                  4,
-                  duration: const Duration(milliseconds: 300),
-                  curve: Curves.linear,
-                );
-              },
-              child: const CircleAvatar(
-                child: Icon(Icons.person_rounded),
-              ),
-            ),
-          ),
+          // leading: Padding(
+          //   padding: const EdgeInsets.all(10),
+          //   child: GestureDetector(
+          //     onTap: () {
+          //       controller.pageController.animateToPage(
+          //         4,
+          //         duration: const Duration(milliseconds: 300),
+          //         curve: Curves.linear,
+          //       );
+          //     },
+          //     child: const CircleAvatar(
+          //       child: Icon(Icons.person_rounded),
+          //     ),
+          //   ),
+          // ),
           title: Text(
             key: Key('${controller.currentPage}'),
             controller.titles[controller.currentPage.value],
@@ -90,18 +90,12 @@ class MainScreen extends StatelessWidget {
             ),
             BottomNavigationBarItem(
               icon: Icon(controller.currentPage.value == 2
-                  ? Icons.category_rounded
-                  : Icons.category_outlined),
-              label: 'Category',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(controller.currentPage.value == 3
                   ? Icons.favorite_rounded
                   : Icons.favorite_outline_rounded),
               label: 'Favorites',
             ),
             BottomNavigationBarItem(
-              icon: Icon(controller.currentPage.value == 4
+              icon: Icon(controller.currentPage.value == 3
                   ? Icons.person_rounded
                   : Icons.person_outline_rounded),
               label: 'Profile',
