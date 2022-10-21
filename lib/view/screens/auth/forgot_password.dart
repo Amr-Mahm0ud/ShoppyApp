@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:shoppy/utils/consts.dart';
 import 'package:shoppy/view/widgets/auth/input_field.dart';
-import 'package:shoppy/view/widgets/back_button.dart';
 import 'package:shoppy/view/widgets/custom_button.dart';
 
 class ForgotPasswordScreen extends StatelessWidget {
@@ -16,7 +15,6 @@ class ForgotPasswordScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: backButton(),
         title: const Text('Forgot Password'),
         centerTitle: true,
       ),

@@ -178,16 +178,7 @@ class SignUpScreen extends StatelessWidget {
                     },
                   );
                 }),
-                ElevatedButton(
-                  onPressed: () {
-                    Get.off(
-                      () => const MainScreen(),
-                      transition: Transition.size,
-                      binding: MainBinding(),
-                    );
-                  },
-                  child: const Text('Next'),
-                )
+                
               ],
             ),
           ),

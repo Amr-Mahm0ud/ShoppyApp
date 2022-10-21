@@ -6,8 +6,10 @@ import 'package:shoppy/utils/consts.dart';
 import 'package:shoppy/utils/themes.dart';
 import 'package:shoppy/view/widgets/custom_button.dart';
 
+import '../../bindings/main_binding.dart';
 import '../../logic/controllers/welcome_screen_controller.dart';
 import 'auth/sign_up_screen.dart';
+import 'home/main_screen.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
@@ -92,71 +94,82 @@ class WelcomeScreen extends StatelessWidget {
                 ),
               ),
             ),
+            //Buttons
             Align(
               alignment: const Alignment(0, 0.675),
               child: GetBuilder<WelcomeScreenController>(
                 builder: (_) {
                   return Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: AnimatedSwitcher(
+                    child: AnimatedCrossFade(
                       duration: const Duration(milliseconds: 300),
-                      child: controller.currentPage == 2
-                          ? CustomButton(
-                              onTap: () {
-                                Get.off(
-                                  () => SignUpScreen(),
-                                  transition: Transition.rightToLeftWithFade,
-                                  binding: AuthBinding(),
-                                );
-                              },
-                              child: Text(
-                                'Get Started',
-                                style: Consts.customButtonTextStyle,
-                              ),
-                            )
-                          : Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                CustomButton(
-                                  width: Get.width * 0.4,
-                                  filled: false,
-                                  onTap: () {
-                                    Get.off(
-                                      () => SignUpScreen(),
-                                      transition:
-                                          Transition.rightToLeftWithFade,
-                                      binding: AuthBinding(),
-                                    );
-                                  },
-                                  child: Text(
-                                    'skip',
-                                    style: Get.textTheme.headline6!.copyWith(
-                                        color: Get.theme.primaryColor),
-                                  ),
-                                ),
-                                CustomButton(
-                                  width: Get.width * 0.4,
-                                  onTap: () {
-                                    int newVal = controller.currentPage + 1;
-                                    controller.pageController.animateToPage(
-                                      newVal,
-                                      duration:
-                                          const Duration(milliseconds: 300),
-                                      curve: Curves.linear,
-                                    );
-                                  },
-                                  child: Text(
-                                    'Next',
-                                    style: Consts.customButtonTextStyle,
-                                  ),
-                                ),
-                              ],
+                      crossFadeState: controller.currentPage == 2
+                          ? CrossFadeState.showFirst
+                          : CrossFadeState.showSecond,
+                      firstChild: CustomButton(
+                        onTap: () {
+                          Get.off(
+                            () => SignUpScreen(),
+                            transition: Transition.rightToLeftWithFade,
+                            binding: AuthBinding(),
+                          );
+                        },
+                        child: Text(
+                          'Get Started',
+                          style: Consts.customButtonTextStyle,
+                        ),
+                      ),
+                      secondChild: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          CustomButton(
+                            width: Get.width * 0.4,
+                            filled: false,
+                            onTap: () {
+                              Get.off(
+                                () => SignUpScreen(),
+                                transition: Transition.rightToLeftWithFade,
+                                binding: AuthBinding(),
+                              );
+                            },
+                            child: Text(
+                              'skip',
+                              style: Get.textTheme.headline6!
+                                  .copyWith(color: Get.theme.primaryColor),
                             ),
+                          ),
+                          CustomButton(
+                            width: Get.width * 0.4,
+                            onTap: () {
+                              int newVal = controller.currentPage + 1;
+                              controller.pageController.animateToPage(
+                                newVal,
+                                duration: const Duration(milliseconds: 300),
+                                curve: Curves.linear,
+                              );
+                            },
+                            child: Text(
+                              'Next',
+                              style: Consts.customButtonTextStyle,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   );
                 },
               ),
             ),
+            ElevatedButton(
+              onPressed: () {
+                Get.off(
+                  () => const MainScreen(),
+                  transition: Transition.size,
+                  binding: MainBinding(),
+                );
+              },
+              child: const Text('Home'),
+            )
           ],
         ),
       ),

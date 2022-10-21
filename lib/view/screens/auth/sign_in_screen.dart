@@ -92,7 +92,7 @@ class SignInScreen extends StatelessWidget {
                 //password
                 GetBuilder<AuthController>(
                   builder: (controller) => inputField(
-                      icon: Icons.lock_clock_rounded,
+                      icon: Icons.lock_rounded,
                       label: 'password',
                       controller: passwordController,
                       validator: (val) {
