@@ -1,73 +1,111 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shoppy/bindings/product_details.dart';
+import 'package:shoppy/logic/controllers/categories_controller.dart';
+import 'package:shoppy/logic/controllers/product_controller.dart';
+import 'package:shoppy/model/product_model.dart';
 
 import '../../../utils/consts.dart';
+import '../../screens/product/product_details.dart';
 
 class ProductCard extends StatelessWidget {
-  const ProductCard({Key? key}) : super(key: key);
+  final ProductModel product;
+  const ProductCard({Key? key, required this.product}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        border: Border.all(color: Get.theme.cardColor),
-        borderRadius: BorderRadius.circular(Consts.borderRadius),
-      ),
-      height: Get.height * 0.27,
-      width: Get.width * 0.375,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-            width: double.infinity,
-            height: Get.height * 0.15,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(Consts.borderRadius),
-                topRight: Radius.circular(Consts.borderRadius),
+    final controller = Get.find<ProductController>();
+    return GestureDetector(
+      onTap: () {
+        final cController = Get.find<CategoriesController>();
+        controller.currentProduct = product.obs;
+        cController.getProductsInCategory(product.category);
+        Get.to(
+          () => const ProductDetails(),
+          transition: Transition.cupertino,
+          binding: ProductBinding(),
+        );
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          border: Border.all(color: Get.theme.cardColor),
+          borderRadius: BorderRadius.circular(Consts.borderRadius),
+        ),
+        height: Get.height * 0.27,
+        width: Get.width * 0.375,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              width: double.infinity,
+              height: Get.height * 0.15,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(Consts.borderRadius),
+                  topRight: Radius.circular(Consts.borderRadius),
+                ),
+                image: DecorationImage(
+                    image: NetworkImage(product.thumbnail), fit: BoxFit.fill),
               ),
-              image: const DecorationImage(
-                  image: AssetImage('assets/images/1.jpg'), fit: BoxFit.fill),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'ProductName',
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1,
-                  style: Get.textTheme.titleMedium!
-                      .copyWith(fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  'ProductType',
-                  style: Get.textTheme.bodyText1!.copyWith(color: Colors.grey),
-                ),
-                const SizedBox(height: 10),
-                Row(
-                  children: [
-                    Text(
-                      "\$ 30.00",
-                      style: Get.textTheme.bodyText1!
-                          .copyWith(color: Get.theme.primaryColor),
-                    ),
-                    const Spacer(),
-                    IconButton(
-                      padding: EdgeInsets.zero,
-                      constraints: const BoxConstraints(),
-                      icon: const Icon(Icons.favorite_outline),
-                      onPressed: () {},
-                    )
-                  ],
-                ),
-              ],
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    product.title,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                    style: Get.textTheme.titleMedium!
+                        .copyWith(fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    product.category,
+                    style:
+                        Get.textTheme.bodyText1!.copyWith(color: Colors.grey),
+                  ),
+                  const SizedBox(height: 10),
+                  Row(
+                    children: [
+                      Text(
+                        "\$${product.price}",
+                        style: Get.textTheme.bodyText1!
+                            .copyWith(color: Get.theme.primaryColor),
+                      ),
+                      const SizedBox(width: 5),
+                      if (product.discountPercentage > 15)
+                        Text(
+                          "\$${(product.price + (product.price * product.discountPercentage / 100)).floor()}",
+                          style: Get.textTheme.bodySmall!.copyWith(
+                            decoration: TextDecoration.lineThrough,
+                            decorationThickness: 2,
+                            decorationStyle: TextDecorationStyle.solid,
+                          ),
+                        ),
+                      const Spacer(),
+                      Obx(
+                        () => IconButton(
+                          padding: EdgeInsets.zero,
+                          constraints: const BoxConstraints(),
+                          icon: controller.isFavorite(product.id)
+                              ? const Icon(Icons.favorite)
+                              : const Icon(Icons.favorite_outline),
+                          onPressed: () {
+                            controller.isFavorite(product.id)
+                                ? controller.removeFromFavorite(product.id)
+                                : controller.addToFavorite(product.id);
+                          },
+                        ),
+                      )
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
-          const Spacer()
-        ],
+            const Spacer()
+          ],
+        ),
       ),
     );
   }
