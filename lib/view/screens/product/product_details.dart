@@ -48,7 +48,6 @@ class ProductDetails extends StatelessWidget {
               children: [
                 if (categoriesController.allProductsInCategory.isEmpty)
                   const LinearProgressIndicator(),
-
                 //tittle
                 Padding(
                   padding: EdgeInsets.symmetric(
@@ -100,14 +99,15 @@ class ProductDetails extends StatelessWidget {
                                             productController
                                                 .selectedColor.value
                                         ? color
-                                        : color.withOpacity(0.5),
+                                        : color.withOpacity(0.4),
                                     border: Border.all(
                                       color: productController.colors
                                                   .indexOf(color) ==
                                               productController
                                                   .selectedColor.value
-                                          ? Get.theme.primaryColor
+                                          ? Get.theme.colorScheme.tertiary
                                           : Get.theme.cardColor,
+                                      width: 2,
                                     ),
                                   ),
                                 ),
@@ -154,12 +154,135 @@ class ProductDetails extends StatelessWidget {
                     horizontal: Get.width * 0.05,
                   ),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Divider(
                         color: Get.theme.cardColor,
                         thickness: 2,
                         height: 0,
                       ),
+                      //Sizes
+                      if (productController.enableClothsSize.contains(
+                              categoriesController.allCategories
+                                  .indexOf(product.category)) ||
+                          productController.enableShoesSize.contains(
+                              categoriesController.allCategories
+                                  .indexOf(product.category)))
+                        SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          physics: const BouncingScrollPhysics(),
+                          child: Row(
+                            children: productController.enableClothsSize
+                                    .contains(categoriesController.allCategories
+                                        .indexOf(product.category))
+                                ? productController.clothsSizes
+                                    .map(
+                                      (size) => GestureDetector(
+                                        onTap: () {
+                                          productController.selectedClothSize(
+                                              productController.clothsSizes
+                                                  .indexOf(size));
+                                        },
+                                        child: Container(
+                                          margin: EdgeInsets.only(
+                                            top: 15,
+                                            left: productController
+                                                        .clothsSizes.first ==
+                                                    size
+                                                ? 0
+                                                : 10,
+                                          ),
+                                          width: 45,
+                                          height: 45,
+                                          alignment: Alignment.center,
+                                          decoration: BoxDecoration(
+                                            border: Border.all(
+                                              width: 2,
+                                              color: productController
+                                                          .clothsSizes
+                                                          .indexOf(size) ==
+                                                      productController
+                                                          .selectedClothSize
+                                                          .value
+                                                  ? Get.theme.colorScheme
+                                                      .tertiary
+                                                  : Get.theme.cardColor,
+                                            ),
+                                          ),
+                                          child: Text(
+                                            size,
+                                            style: Get.textTheme.headline6!
+                                                .copyWith(
+                                              color: productController
+                                                          .clothsSizes
+                                                          .indexOf(size) ==
+                                                      productController
+                                                          .selectedClothSize
+                                                          .value
+                                                  ? Get.textTheme.headline5!
+                                                      .color
+                                                  : Colors.grey,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                    .toList()
+                                : productController.shoesSizes
+                                    .map(
+                                      (size) => GestureDetector(
+                                        onTap: () {
+                                          productController.selectedShoesSize(
+                                              productController.shoesSizes
+                                                  .indexOf(size));
+                                        },
+                                        child: Container(
+                                          margin: EdgeInsets.only(
+                                            top: 15,
+                                            left: productController
+                                                        .shoesSizes.first ==
+                                                    size
+                                                ? 0
+                                                : 10,
+                                          ),
+                                          width: 45,
+                                          height: 45,
+                                          alignment: Alignment.center,
+                                          decoration: BoxDecoration(
+                                            border: Border.all(
+                                              width: 2,
+                                              color: productController
+                                                          .shoesSizes
+                                                          .indexOf(size) ==
+                                                      productController
+                                                          .selectedShoesSize
+                                                          .value
+                                                  ? Get.theme.colorScheme
+                                                      .tertiary
+                                                  : Get.theme.cardColor,
+                                            ),
+                                          ),
+                                          child: Text(
+                                            size.toString(),
+                                            style: Get.textTheme.headline6!
+                                                .copyWith(
+                                              color: productController
+                                                          .shoesSizes
+                                                          .indexOf(size) ==
+                                                      productController
+                                                          .selectedShoesSize
+                                                          .value
+                                                  ? Get.textTheme.headline5!
+                                                      .color
+                                                  : Colors.grey,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                    .toList(),
+                          ),
+                        ),
                       const SizedBox(height: 15),
                       //price & rate
                       Row(
