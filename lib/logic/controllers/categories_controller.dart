@@ -1,6 +1,7 @@
 import 'package:get/state_manager.dart';
 import 'package:shoppy/model/product_model.dart';
-import 'package:shoppy/services/categories_services.dart';
+
+import '../services/categories_services.dart';
 
 class CategoriesController extends GetxController {
   @override

@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shoppy/bindings/main_binding.dart';
 import 'package:shoppy/logic/controllers/auth_controller.dart';
 import 'package:shoppy/utils/consts.dart';
 import 'package:shoppy/view/screens/auth/forgot_password.dart';
 import 'package:shoppy/view/screens/auth/sign_up_screen.dart';
-import 'package:shoppy/view/screens/home/main_screen.dart';
 
 import '../../widgets/auth/input_field.dart';
 import '../../widgets/custom_button.dart';
@@ -20,6 +18,7 @@ class SignInScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.find<AuthController>();
     return Scaffold(
       appBar: AppBar(
         leadingWidth: Get.width * 0.3,
@@ -125,11 +124,9 @@ class SignInScreen extends StatelessWidget {
                   onTap: () {
                     bool valid = formKey.currentState!.validate();
                     if (valid) {
-                      Get.off(
-                        () => const MainScreen(),
-                        transition: Transition.size,
-                        binding: MainBinding(),
-                      );
+                      controller.login(
+                          email: emailController.text.trim(),
+                          password: passwordController.text.trim());
                     }
                   },
                 ),

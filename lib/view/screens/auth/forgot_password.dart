@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
+import 'package:shoppy/logic/controllers/auth_controller.dart';
 import 'package:shoppy/utils/consts.dart';
 import 'package:shoppy/view/widgets/auth/input_field.dart';
 import 'package:shoppy/view/widgets/custom_button.dart';
@@ -13,6 +14,7 @@ class ForgotPasswordScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final AuthController controller = Get.find<AuthController>();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Forgot Password'),
@@ -53,27 +55,33 @@ class ForgotPasswordScreen extends StatelessWidget {
                 },
               ),
               SizedBox(height: Get.height * 0.025),
-              CustomButton(
-                child: Text(
-                  'Send Email',
-                  style: Consts.customButtonTextStyle,
+              GetBuilder<AuthController>(
+                builder: (_) => CustomButton(
+                  onTap: controller.isLoading
+                      ? null
+                      : () {
+                          bool valid = inputKey.currentState!.validate();
+                          if (valid) {
+                            controller.sendPasswordResetEmail(
+                              emailController.text.trim(),
+                            );
+                          }
+                        },
+                  child: AnimatedCrossFade(
+                    firstChild: Text(
+                      'Send Email',
+                      style: Consts.customButtonTextStyle,
+                    ),
+                    crossFadeState: controller.isLoading
+                        ? CrossFadeState.showSecond
+                        : CrossFadeState.showFirst,
+                    duration: const Duration(milliseconds: 100),
+                    secondChild: const CircularProgressIndicator(
+                      color: Colors.white,
+                    ),
+                  ),
                 ),
-                onTap: () {
-                  bool valid = inputKey.currentState!.validate();
-                  if (valid) {
-                    Get.back();
-                    Consts.successSnackBar(
-                      title: 'Email sent',
-                      body: Lottie.asset(
-                        'assets/lotties/email_sent.json',
-                        height: Get.height * 0.15,
-                        repeat: false,
-                      ),
-                      duration: const Duration(milliseconds: 1500),
-                    );
-                  }
-                },
-              )
+              ),
             ],
           ),
         ),

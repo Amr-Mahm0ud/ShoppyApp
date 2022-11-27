@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shoppy/bindings/auth_binding.dart';
 
 import 'package:shoppy/utils/consts.dart';
 import 'package:shoppy/utils/themes.dart';
@@ -111,7 +110,6 @@ class WelcomeScreen extends StatelessWidget {
                           Get.off(
                             () => SignUpScreen(),
                             transition: Transition.rightToLeftWithFade,
-                            binding: AuthBinding(),
                           );
                         },
                         child: Text(
@@ -129,7 +127,6 @@ class WelcomeScreen extends StatelessWidget {
                               Get.off(
                                 () => SignUpScreen(),
                                 transition: Transition.rightToLeftWithFade,
-                                binding: AuthBinding(),
                               );
                             },
                             child: Text(

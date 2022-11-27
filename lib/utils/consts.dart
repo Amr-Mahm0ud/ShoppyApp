@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -5,6 +6,10 @@ class Consts {
   static String baseURL = 'https://dummyjson.com';
 
   static double borderRadius = 5;
+
+  static final String kApiUrl = defaultTargetPlatform == TargetPlatform.android
+      ? 'http://10.0.2.2:4242'
+      : 'http://localhost:4242';
 
   static final TextStyle customButtonTextStyle =
       Get.textTheme.headline6!.copyWith(color: Colors.white);

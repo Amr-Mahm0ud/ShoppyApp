@@ -32,9 +32,6 @@ class WishListScreen extends StatelessWidget {
           : Padding(
               padding: EdgeInsets.only(
                 bottom: MediaQuery.of(context).padding.bottom,
-                left: Get.width * 0.05,
-                right: Get.width * 0.05,
-                top: Get.height * 0.02,
               ),
               child: ListView.builder(
                 itemBuilder: (BuildContext context, int index) => ProductTile(

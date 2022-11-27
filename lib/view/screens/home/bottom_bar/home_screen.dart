@@ -17,11 +17,8 @@ class HomeScreen extends StatelessWidget {
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
       child: Padding(
-        padding: EdgeInsets.fromLTRB(
-          Get.width * 0.05,
-          0,
-          Get.width * 0.05,
-          MediaQuery.of(context).padding.bottom,
+        padding: EdgeInsets.only(
+          bottom: MediaQuery.of(context).padding.bottom,
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -65,12 +62,25 @@ class HomeScreen extends StatelessWidget {
               style: Get.textTheme.headline6!
                   .copyWith(fontWeight: FontWeight.normal),
             ),
-            buildSection(
-              productController.allProducts
-                  .getRange(
-                      productController.random, productController.random + 7)
-                  .toList(),
-            ),
+            productController.allProducts.isEmpty
+                ? SizedBox(
+                    height: Get.height * 0.27,
+                    child: Container(
+                      height: Get.height * 0.27,
+                      width: Get.width * 0.9,
+                      decoration: BoxDecoration(
+                        color: Get.theme.cardColor,
+                        borderRadius:
+                            BorderRadius.circular(Consts.borderRadius),
+                      ),
+                    ),
+                  )
+                : buildSection(
+                    productController.allProducts
+                        .getRange(productController.random.value,
+                            productController.random.value + 7)
+                        .toList(),
+                  ),
             const SizedBox(height: 10),
             Text(
               'Hot Deals',

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
-import 'package:shoppy/bindings/payment_binding.dart';
 import 'package:shoppy/logic/controllers/cart_controller.dart';
 import 'package:shoppy/view/screens/order/order_screen.dart';
 import 'package:shoppy/view/widgets/cart_item.dart';
@@ -97,7 +96,6 @@ class CartScreen extends StatelessWidget {
                       onTap: () {
                         Get.to(
                           () => const OrderScreen(),
-                          binding: PaymentBinding(),
                         );
                       },
                       child: Text(

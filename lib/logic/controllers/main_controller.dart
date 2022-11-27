@@ -8,8 +8,6 @@ import 'package:shoppy/view/screens/home/bottom_bar/wishlist_screen.dart';
 class MainController extends GetxController {
   RxInt currentPage = 0.obs;
 
-  PageController pageController = PageController();
-
   List<Widget> pages = [
     const HomeScreen(),
     const DiscoverScreen(),

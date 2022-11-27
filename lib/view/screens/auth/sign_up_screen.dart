@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shoppy/logic/controllers/auth_controller.dart';
 import 'package:shoppy/utils/consts.dart';
-import '../../../bindings/main_binding.dart';
-import '../home/main_screen.dart';
+
 import 'sign_in_screen.dart';
 import '../../widgets/auth/input_field.dart';
 import '../../widgets/custom_button.dart';
@@ -12,7 +11,6 @@ class SignUpScreen extends StatelessWidget {
   SignUpScreen({super.key});
 
   final GlobalKey<FormState> formKey = GlobalKey();
-  final TextEditingController usernameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final String validationEmail =
@@ -74,24 +72,6 @@ class SignUpScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 30),
-                //username
-                inputField(
-                  icon: Icons.person_rounded,
-                  label: 'User Name',
-                  controller: usernameController,
-                  validator: (val) {
-                    if (val == null || val.trim().isEmpty) {
-                      return 'name is required';
-                    } else if (!RegExp(validationName).hasMatch(val.trim())) {
-                      return 'please enter a real name';
-                    }
-                    return null;
-                  },
-                  onSave: (val) {
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 15),
                 //email
                 inputField(
                   icon: Icons.email_rounded,
@@ -164,21 +144,18 @@ class SignUpScreen extends StatelessWidget {
                 GetBuilder<AuthController>(builder: (_) {
                   return CustomButton(
                     child: Text('Sign Up', style: Consts.customButtonTextStyle),
-                    onTap: () {
+                    onTap: () async {
                       bool valid = formKey.currentState!.validate();
                       if (valid && controller.acceptTerms) {
-                        Get.off(
-                          () => const MainScreen(),
-                          transition: Transition.size,
-                          binding: MainBinding(),
-                        );
+                        await controller.signUp(
+                            email: emailController.text.trim(),
+                            password: passwordController.text.trim());
                       } else if (!controller.acceptTerms) {
                         Consts.errorSnackBar('you have to accept our terms');
                       }
                     },
                   );
                 }),
-                
               ],
             ),
           ),

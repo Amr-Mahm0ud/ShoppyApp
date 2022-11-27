@@ -3,7 +3,8 @@ import 'dart:math';
 import 'package:get/state_manager.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:shoppy/model/product_model.dart';
-import 'package:shoppy/services/products_services.dart';
+
+import '../services/products_services.dart';
 
 class ProductController extends GetxController {
   @override
@@ -27,7 +28,7 @@ class ProductController extends GetxController {
 
   GetStorage box = GetStorage();
 
-  int random = Random().nextInt(20);
+  RxInt random = (0).obs;
 
   void getProducts() async {
     try {
@@ -37,6 +38,7 @@ class ProductController extends GetxController {
         allProducts.addAll(products);
       }
     } finally {
+      random.value = Random().nextInt(allProducts.length - 7);
       isLoading(false);
     }
   }
