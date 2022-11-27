@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shoppy/logic/controllers/cart_controller.dart';
 import 'package:shoppy/logic/controllers/categories_controller.dart';
 import 'package:shoppy/logic/controllers/product_details.dart';
 import 'package:shoppy/model/product_model.dart';
 import 'package:shoppy/view/screens/product/product_in_category.dart';
 import 'package:shoppy/view/widgets/bouncing_animation.dart';
 import 'package:shoppy/view/widgets/custom_button.dart';
-import 'package:shoppy/view/widgets/switch_animation.dart';
 
 import '../../../logic/controllers/product_controller.dart';
 import '../../../utils/consts.dart';
 import '../../../utils/themes.dart';
 import '../../widgets/product/product_card.dart';
+import '../order/cart_screen.dart';
 
 class ProductDetails extends StatelessWidget {
   const ProductDetails({Key? key}) : super(key: key);
@@ -21,6 +22,7 @@ class ProductDetails extends StatelessWidget {
     final controller = Get.find<ProductController>();
     final productController = Get.find<ProductDetailsController>();
     final categoriesController = Get.find<CategoriesController>();
+    final cartController = Get.find<CartController>();
     final ProductModel product = controller.currentProduct!.value;
     return Obx(
       () {
@@ -28,6 +30,7 @@ class ProductDetails extends StatelessWidget {
           appBar: AppBar(
             actions: [
               IconButton(
+                padding: EdgeInsets.zero,
                 constraints: const BoxConstraints(),
                 icon: controller.isFavorite(product.id)
                     ? const Icon(Icons.favorite)
@@ -38,7 +41,57 @@ class ProductDetails extends StatelessWidget {
                       : controller.addToFavorite(product.id);
                 },
               ),
-              const SizedBox(width: 10)
+              GestureDetector(
+                onTap: () {
+                  Get.to(() => const CartScreen(),
+                      transition: Transition.cupertino);
+                },
+                child: SizedBox(
+                  width: Get.width * 0.15,
+                  height: Get.width * 0.15,
+                  child: Obx(
+                    () => AnimatedRotation(
+                      turns: cartController.shakeAnimation.value,
+                      duration: const Duration(milliseconds: 100),
+                      child: Stack(
+                        children: [
+                          const Align(
+                            alignment: Alignment.center,
+                            child: Icon(Icons.shopping_cart_outlined),
+                          ),
+                          Align(
+                            alignment: const Alignment(0.5, -0.5),
+                            child: AnimatedContainer(
+                              transformAlignment: Alignment.center,
+                              duration: const Duration(milliseconds: 100),
+                              width: cartController.animateNum.value ? 0 : 18,
+                              height: cartController.animateNum.value ? 0 : 18,
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: Get.theme.backgroundColor,
+                                  strokeAlign: StrokeAlign.outside,
+                                  width: 2,
+                                ),
+                                color: Get.theme.errorColor,
+                                shape: BoxShape.circle,
+                              ),
+                              alignment: Alignment.center,
+                              child: cartController.animateNum.value
+                                  ? null
+                                  : Text(
+                                      cartController.cartItems.length
+                                          .toString(),
+                                      style:
+                                          const TextStyle(color: Colors.white),
+                                    ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
           body: SingleChildScrollView(
@@ -461,26 +514,27 @@ class ProductDetails extends StatelessWidget {
                 Expanded(
                   child: BouncingAnimation(
                     child: CustomButton(
-                      filled: false,
-                      onTap: () {},
-                      child: Text(
-                        'Add To Cart',
-                        style: Get.textTheme.headline6,
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 20),
-                Expanded(
-                  child: BouncingAnimation(
-                    child: CustomButton(
                       filled: true,
-                      onTap: () {},
-                      child: Text(
-                        'Buy Now',
-                        style: Get.textTheme.headline6!.copyWith(
-                          color: Colors.white,
+                      onTap: () {
+                        cartController.animateShaking();
+                        cartController.addToCart(product);
+                      },
+                      child: AnimatedCrossFade(
+                        firstChild: Text(
+                          'Add To Cart',
+                          style: Get.textTheme.headline6!
+                              .copyWith(color: Colors.white),
                         ),
+                        secondChild: Text(
+                          'Increase quantity  ${cartController.cartItems.singleWhere((element) => element.item.id == product.id).quantity}',
+                          style: Get.textTheme.headline6!
+                              .copyWith(color: Colors.white),
+                        ),
+                        crossFadeState: cartController.cartItems
+                                .any((element) => element.item.id == product.id)
+                            ? CrossFadeState.showSecond
+                            : CrossFadeState.showFirst,
+                        duration: const Duration(milliseconds: 200),
                       ),
                     ),
                   ),

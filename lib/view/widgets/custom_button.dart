@@ -32,7 +32,6 @@ class CustomButton extends StatelessWidget {
           height: height ?? Get.height * 0.07,
           alignment: Alignment.center,
           width: width ?? Get.width,
-          padding: const EdgeInsets.symmetric(vertical: 15),
           decoration: BoxDecoration(
             color:
                 filled ? color ?? Get.theme.primaryColor : Colors.transparent,

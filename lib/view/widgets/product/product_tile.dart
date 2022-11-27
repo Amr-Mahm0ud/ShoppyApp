@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shoppy/logic/controllers/cart_controller.dart';
 import 'package:shoppy/model/product_model.dart';
 import 'package:shoppy/view/screens/product/product_details.dart';
 
@@ -17,6 +18,8 @@ class ProductTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<ProductController>();
+    final cartController = Get.find<CartController>();
+
     return GestureDetector(
       onTap: () {
         final cController = Get.find<CategoriesController>();
@@ -99,20 +102,44 @@ class ProductTile extends StatelessWidget {
               ),
             ),
             Expanded(
-              child: Align(
-                alignment: Alignment.bottomRight,
-                child: Obx(
-                  () => IconButton(
-                    icon: controller.isFavorite(product.id)
-                        ? const Icon(Icons.favorite)
-                        : const Icon(Icons.favorite_outline),
-                    onPressed: () {
-                      controller.isFavorite(product.id)
-                          ? controller.removeFromFavorite(product.id)
-                          : controller.addToFavorite(product.id);
-                    },
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Obx(
+                    () => IconButton(
+                      icon: controller.isFavorite(product.id)
+                          ? const Icon(Icons.favorite)
+                          : const Icon(Icons.favorite_outline),
+                      onPressed: () {
+                        controller.isFavorite(product.id)
+                            ? controller.removeFromFavorite(product.id)
+                            : controller.addToFavorite(product.id);
+                      },
+                    ),
                   ),
-                ),
+                  const SizedBox(height: 15),
+                  Obx(
+                    () => IconButton(
+                      padding: EdgeInsets.zero,
+                      constraints: const BoxConstraints(),
+                      icon: AnimatedCrossFade(
+                        firstChild:
+                            const Icon(Icons.add_shopping_cart_outlined),
+                        crossFadeState: cartController.cartItems.any(
+                          (element) => element.item.id == product.id,
+                        )
+                            ? CrossFadeState.showFirst
+                            : CrossFadeState.showSecond,
+                        duration: const Duration(milliseconds: 300),
+                        secondChild: const Icon(Icons.shopping_cart_outlined),
+                      ),
+                      onPressed: () {
+                        cartController.animateShaking();
+                        cartController.addToCart(product);
+                      },
+                    ),
+                  ),
+                ],
               ),
             ),
           ],
