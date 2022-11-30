@@ -26,6 +26,12 @@ class ProductDetails extends StatelessWidget {
     final ProductModel product = controller.currentProduct!.value;
     return Obx(
       () {
+        int quantity = cartController.cartItems
+                .any((element) => element.item.id == product.id)
+            ? cartController.cartItems
+                .singleWhere((element) => element.item.id == product.id)
+                .quantity
+            : 0;
         return Scaffold(
           appBar: AppBar(
             actions: [
@@ -526,7 +532,7 @@ class ProductDetails extends StatelessWidget {
                               .copyWith(color: Colors.white),
                         ),
                         secondChild: Text(
-                          'Increase quantity  ${cartController.cartItems.singleWhere((element) => element.item.id == product.id).quantity}',
+                          'Increase quantity  $quantity',
                           style: Get.textTheme.headline6!
                               .copyWith(color: Colors.white),
                         ),

@@ -21,7 +21,6 @@ class ProductCard extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         final cController = Get.find<CategoriesController>();
-
         controller.currentProduct = product.obs;
         cController.getProductsInCategory(product.category);
         Get.to(
