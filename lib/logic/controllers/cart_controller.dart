@@ -8,6 +8,8 @@ class CartController extends GetxController {
 
   RxBool animateNum = false.obs;
   RxDouble shakeAnimation = 0.0.obs;
+  RxBool payAnimation = false.obs;
+  RxBool showMore = false.obs;
 
   RxInt totalPrice = 0.obs;
 
@@ -29,7 +31,12 @@ class CartController extends GetxController {
     );
   }
 
-  addToCart(ProductModel item) {
+  addToCart({
+    required ProductModel item,
+    required int color,
+    required int cSize,
+    required int sSize,
+  }) {
     if (cartItems.any(
       (element) => element.item.id == item.id,
     )) {
@@ -42,7 +49,13 @@ class CartController extends GetxController {
         int quantity = cartItems
             .firstWhere((element) => element.item.id == item.id)
             .quantity;
-        final newVal = CartItemModel(item: item, quantity: quantity + 1);
+        final newVal = CartItemModel(
+          item: item,
+          quantity: quantity + 1,
+          clothSize: cSize,
+          color: color,
+          shoesSize: sSize,
+        );
         cartItems[cartItems.indexWhere(
           (element) => element.item.id == item.id,
         )] = newVal;
@@ -55,6 +68,9 @@ class CartController extends GetxController {
         CartItemModel(
           item: item,
           quantity: 1,
+          clothSize: cSize,
+          color: color,
+          shoesSize: sSize,
         ),
       );
       Future.delayed(const Duration(milliseconds: 100)).then(
@@ -64,7 +80,12 @@ class CartController extends GetxController {
     calcTotalPrice();
   }
 
-  decreaseFromCart(ProductModel item) {
+  decreaseFromCart({
+    required ProductModel item,
+    required int color,
+    required int cSize,
+    required int sSize,
+  }) {
     if (cartItems.any(
           (element) => element.item.id == item.id,
         ) &&
@@ -77,7 +98,13 @@ class CartController extends GetxController {
       int quantity = cartItems
           .firstWhere((element) => element.item.id == item.id)
           .quantity;
-      final newVal = CartItemModel(item: item, quantity: quantity - 1);
+      final newVal = CartItemModel(
+        item: item,
+        quantity: quantity - 1,
+        clothSize: cSize,
+        color: color,
+        shoesSize: sSize,
+      );
       cartItems[cartItems.indexWhere(
         (element) => element.item.id == item.id,
       )] = newVal;

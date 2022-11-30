@@ -120,7 +120,12 @@ class ProductCard extends StatelessWidget {
                           ),
                           onPressed: () {
                             cartController.animateShaking();
-                            cartController.addToCart(product);
+                            cartController.addToCart(
+                              item: product,
+                              cSize: 0,
+                              color: 0,
+                              sSize: 0,
+                            );
                           },
                         ),
                       ),

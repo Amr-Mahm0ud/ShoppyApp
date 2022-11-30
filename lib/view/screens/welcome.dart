@@ -5,10 +5,8 @@ import 'package:shoppy/utils/consts.dart';
 import 'package:shoppy/utils/themes.dart';
 import 'package:shoppy/view/widgets/custom_button.dart';
 
-import '../../bindings/main_binding.dart';
 import '../../logic/controllers/welcome_screen_controller.dart';
 import 'auth/sign_up_screen.dart';
-import 'home/main_screen.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});

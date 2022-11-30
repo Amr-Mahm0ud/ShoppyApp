@@ -94,9 +94,8 @@ class CartScreen extends StatelessWidget {
                     child: CustomButton(
                       filled: true,
                       onTap: () {
-                        Get.to(
-                          () => const OrderScreen(),
-                        );
+                        Get.to(() => OrderScreen(),
+                            transition: Transition.downToUp);
                       },
                       child: Text(
                         'Order Now',

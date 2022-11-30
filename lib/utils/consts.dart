@@ -3,6 +3,31 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class Consts {
+  static final List<Color> colors = [
+    Colors.red,
+    Colors.blue,
+    Colors.black,
+    Colors.grey,
+    Colors.white,
+  ];
+  static final List<int> enableColors = [
+    0,
+    1,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    16,
+    19
+  ];
+  static final List<int> enableClothsSize = [7, 8, 10];
+  static final List<String> clothsSizes = ['S', 'M', 'L', 'XL', 'XXL'];
+  static final List<int> enableShoesSize = [9, 11];
+  static final List<int> shoesSizes = [37, 38, 39, 40, 41, 42, 43, 44, 45];
   static String baseURL = 'https://dummyjson.com';
 
   static double borderRadius = 5;

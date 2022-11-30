@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:shoppy/utils/consts.dart';
 
@@ -13,9 +14,20 @@ Widget inputField({
   required String label,
   required IconData icon,
   Widget? widget,
+  TextInputType? type,
 }) {
   return TextFormField(
+    keyboardType: type ??
+        ((label == 'Email')
+            ? TextInputType.emailAddress
+            : TextInputType.visiblePassword),
     key: key,
+    inputFormatters: (label == 'Card Number')
+        ? [
+            FilteringTextInputFormatter.digitsOnly,
+            CardNumberFormatter(),
+          ]
+        : null,
     validator: validator,
     onSaved: onSave,
     controller: controller,
@@ -36,4 +48,35 @@ Widget inputField({
       suffixIcon: widget,
     ),
   );
+}
+
+class CardNumberFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(
+    TextEditingValue oldValue,
+    TextEditingValue newValue,
+  ) {
+    var inputText = newValue.text;
+
+    if (newValue.selection.baseOffset == 0) {
+      return newValue;
+    }
+
+    var bufferString = StringBuffer();
+    for (int i = 0; i < inputText.length; i++) {
+      bufferString.write(inputText[i]);
+      var nonZeroIndexValue = i + 1;
+      if (nonZeroIndexValue % 4 == 0 && nonZeroIndexValue != inputText.length) {
+        bufferString.write(' ');
+      }
+    }
+
+    var string = bufferString.toString();
+    return newValue.copyWith(
+      text: string,
+      selection: TextSelection.collapsed(
+        offset: string.length,
+      ),
+    );
+  }
 }

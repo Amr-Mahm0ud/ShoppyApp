@@ -93,7 +93,12 @@ class CartItem extends StatelessWidget {
                             child: IconButton(
                               icon: const Icon(Icons.add),
                               onPressed: () {
-                                cartController.addToCart(item.item);
+                                cartController.addToCart(
+                                  item: item.item,
+                                  cSize: item.clothSize,
+                                  color: item.color,
+                                  sSize: item.shoesSize,
+                                );
                               },
                             ),
                           ),
@@ -107,7 +112,12 @@ class CartItem extends StatelessWidget {
                             child: IconButton(
                               icon: const Icon(Icons.remove),
                               onPressed: () {
-                                cartController.decreaseFromCart(item.item);
+                                cartController.decreaseFromCart(
+                                  item: item.item,
+                                  cSize: item.clothSize,
+                                  color: item.color,
+                                  sSize: item.shoesSize,
+                                );
                               },
                             ),
                           ),

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shoppy/logic/controllers/cart_controller.dart';
 import 'package:shoppy/logic/controllers/categories_controller.dart';
-import 'package:shoppy/logic/controllers/product_details.dart';
+import 'package:shoppy/logic/controllers/product_details_controller.dart';
 import 'package:shoppy/model/product_model.dart';
 import 'package:shoppy/view/screens/product/product_in_category.dart';
 import 'package:shoppy/view/widgets/bouncing_animation.dart';
@@ -133,16 +133,16 @@ class ProductDetails extends StatelessWidget {
                 //images & colors
                 Row(
                   children: [
-                    if (productController.enableColors.contains(
-                        categoriesController.allCategories
-                            .indexOf(product.category)))
+                    if (Consts.enableColors.contains(categoriesController
+                        .allCategories
+                        .indexOf(product.category)))
                       Column(
-                        children: productController.colors
+                        children: Consts.colors
                             .map(
                               (color) => GestureDetector(
                                 onTap: () {
                                   productController.selectedColor(
-                                      productController.colors.indexOf(color));
+                                      Consts.colors.indexOf(color));
                                 },
                                 child: Container(
                                   margin: const EdgeInsets.symmetric(
@@ -153,15 +153,13 @@ class ProductDetails extends StatelessWidget {
                                   height: 30,
                                   decoration: BoxDecoration(
                                     shape: BoxShape.circle,
-                                    color: productController.colors
-                                                .indexOf(color) ==
+                                    color: Consts.colors.indexOf(color) ==
                                             productController
                                                 .selectedColor.value
                                         ? color
                                         : color.withOpacity(0.4),
                                     border: Border.all(
-                                      color: productController.colors
-                                                  .indexOf(color) ==
+                                      color: Consts.colors.indexOf(color) ==
                                               productController
                                                   .selectedColor.value
                                           ? Get.theme.colorScheme.tertiary
@@ -221,35 +219,33 @@ class ProductDetails extends StatelessWidget {
                         height: 0,
                       ),
                       //Sizes
-                      if (productController.enableClothsSize.contains(
-                              categoriesController.allCategories
-                                  .indexOf(product.category)) ||
-                          productController.enableShoesSize.contains(
-                              categoriesController.allCategories
-                                  .indexOf(product.category)))
+                      if (Consts.enableClothsSize.contains(categoriesController
+                              .allCategories
+                              .indexOf(product.category)) ||
+                          Consts.enableShoesSize.contains(categoriesController
+                              .allCategories
+                              .indexOf(product.category)))
                         SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
                           physics: const BouncingScrollPhysics(),
                           child: Row(
-                            children: productController.enableClothsSize
-                                    .contains(categoriesController.allCategories
+                            children: Consts.enableClothsSize.contains(
+                                    categoriesController.allCategories
                                         .indexOf(product.category))
-                                ? productController.clothsSizes
+                                ? Consts.clothsSizes
                                     .map(
                                       (size) => GestureDetector(
                                         onTap: () {
                                           productController.selectedClothSize(
-                                              productController.clothsSizes
-                                                  .indexOf(size));
+                                              Consts.clothsSizes.indexOf(size));
                                         },
                                         child: Container(
                                           margin: EdgeInsets.only(
                                             top: 15,
-                                            left: productController
-                                                        .clothsSizes.first ==
-                                                    size
-                                                ? 0
-                                                : 10,
+                                            left:
+                                                Consts.clothsSizes.first == size
+                                                    ? 0
+                                                    : 10,
                                           ),
                                           width: 45,
                                           height: 45,
@@ -257,8 +253,7 @@ class ProductDetails extends StatelessWidget {
                                           decoration: BoxDecoration(
                                             border: Border.all(
                                               width: 2,
-                                              color: productController
-                                                          .clothsSizes
+                                              color: Consts.clothsSizes
                                                           .indexOf(size) ==
                                                       productController
                                                           .selectedClothSize
@@ -272,8 +267,7 @@ class ProductDetails extends StatelessWidget {
                                             size,
                                             style: Get.textTheme.headline6!
                                                 .copyWith(
-                                              color: productController
-                                                          .clothsSizes
+                                              color: Consts.clothsSizes
                                                           .indexOf(size) ==
                                                       productController
                                                           .selectedClothSize
@@ -287,22 +281,20 @@ class ProductDetails extends StatelessWidget {
                                       ),
                                     )
                                     .toList()
-                                : productController.shoesSizes
+                                : Consts.shoesSizes
                                     .map(
                                       (size) => GestureDetector(
                                         onTap: () {
                                           productController.selectedShoesSize(
-                                              productController.shoesSizes
-                                                  .indexOf(size));
+                                              Consts.shoesSizes.indexOf(size));
                                         },
                                         child: Container(
                                           margin: EdgeInsets.only(
                                             top: 15,
-                                            left: productController
-                                                        .shoesSizes.first ==
-                                                    size
-                                                ? 0
-                                                : 10,
+                                            left:
+                                                Consts.shoesSizes.first == size
+                                                    ? 0
+                                                    : 10,
                                           ),
                                           width: 45,
                                           height: 45,
@@ -310,8 +302,7 @@ class ProductDetails extends StatelessWidget {
                                           decoration: BoxDecoration(
                                             border: Border.all(
                                               width: 2,
-                                              color: productController
-                                                          .shoesSizes
+                                              color: Consts.shoesSizes
                                                           .indexOf(size) ==
                                                       productController
                                                           .selectedShoesSize
@@ -325,8 +316,7 @@ class ProductDetails extends StatelessWidget {
                                             size.toString(),
                                             style: Get.textTheme.headline6!
                                                 .copyWith(
-                                              color: productController
-                                                          .shoesSizes
+                                              color: Consts.shoesSizes
                                                           .indexOf(size) ==
                                                       productController
                                                           .selectedShoesSize
@@ -523,7 +513,12 @@ class ProductDetails extends StatelessWidget {
                       filled: true,
                       onTap: () {
                         cartController.animateShaking();
-                        cartController.addToCart(product);
+                        cartController.addToCart(
+                          item: product,
+                          cSize: productController.selectedClothSize.value,
+                          color: productController.selectedColor.value,
+                          sSize: productController.selectedShoesSize.value,
+                        );
                       },
                       child: AnimatedCrossFade(
                         firstChild: Text(
