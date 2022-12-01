@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:flutter/cupertino.dart';
 import 'package:get/state_manager.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:shoppy/model/product_model.dart';
@@ -56,5 +57,23 @@ class ProductController extends GetxController {
 
   bool isFavorite(productId) {
     return favorites.any((product) => product.id == productId);
+  }
+
+  //search logic
+  TextEditingController searchController = TextEditingController();
+  RxList<ProductModel> searchResult = <ProductModel>[].obs;
+
+  findProductByName(String name) {
+    searchResult.value = allProducts
+        .where((element) =>
+            element.title.toLowerCase().contains(name.toLowerCase()))
+        .toList();
+    update();
+  }
+
+  clearSearch() {
+    searchController.clear();
+    findProductByName('');
+    update();
   }
 }
