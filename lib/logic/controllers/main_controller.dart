@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/state_manager.dart';
 import 'package:shoppy/view/screens/home/bottom_bar/discover.dart';
 import 'package:shoppy/view/screens/home/bottom_bar/home_screen.dart';
-import 'package:shoppy/view/screens/home/bottom_bar/profile_screen.dart';
+import 'package:shoppy/view/screens/home/bottom_bar/profile/profile_screen.dart';
 import 'package:shoppy/view/screens/home/bottom_bar/wishlist_screen.dart';
 
 class MainController extends GetxController {

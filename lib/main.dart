@@ -19,6 +19,7 @@ void main() async {
   await GetStorage.init();
   await Firebase.initializeApp();
   Get.put(AuthController());
+  Get.put(ThemeController());
   runApp(const MyApp());
 }
 
@@ -27,12 +28,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeController = Get.find<ThemeController>();
     return GetBuilder<AuthController>(
       builder: (controller) => GetMaterialApp(
         debugShowCheckedModeBanner: false,
         theme: Themes.lightTheme,
         darkTheme: Themes.darkTheme,
-        themeMode: ThemeController().theme,
+        themeMode: themeController.theme,
         initialRoute:
             controller.tryAutoLogin() ? '/homeScreen' : '/welcomeScreen',
         getPages: [

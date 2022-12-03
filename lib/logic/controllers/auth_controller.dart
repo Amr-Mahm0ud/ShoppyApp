@@ -16,6 +16,9 @@ import '../../bindings/main_binding.dart';
 class AuthController extends GetxController {
   @override
   void onInit() {
+    userName = _authStorage.read('userName');
+    userImage = _authStorage.read('userImage');
+    phoneNum = _authStorage.read('phoneNum');
     token = _authStorage.read('tokenKey');
     userId = _authStorage.read('idKey');
     userEmail = _authStorage.read('email');
@@ -23,6 +26,21 @@ class AuthController extends GetxController {
         ? null
         : DateTime.parse(_authStorage.read('expiryKey'));
     super.onInit();
+  }
+
+//personal info
+  RxInt selectedImage = 0.obs;
+  String? userImage;
+  String? userName;
+  String? phoneNum;
+
+  updateInfo({String? name, String? image, String? phone}) {
+    userImage = image;
+    userName = name;
+    phoneNum = phone;
+    _authStorage.write('userName', name);
+    _authStorage.write('userImage', image);
+    _authStorage.write('phoneNum', phone);
   }
 
   //authentication variables
@@ -77,6 +95,9 @@ class AuthController extends GetxController {
     userId = null;
     expiryDate = null;
     _authStorage.remove('tokenKey');
+    _authStorage.remove('userImage');
+    _authStorage.remove('userName');
+    _authStorage.remove('phoneNum');
     _authStorage.remove('idKey');
     _authStorage.remove('expiryKey');
     if (authTimer != null) {
