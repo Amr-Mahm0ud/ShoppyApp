@@ -29,28 +29,31 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themeController = Get.find<ThemeController>();
+    themeController.isDark(themeController.theme == ThemeMode.dark);
     return GetBuilder<AuthController>(
-      builder: (controller) => GetMaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: Themes.lightTheme,
-        darkTheme: Themes.darkTheme,
-        themeMode: themeController.theme,
-        initialRoute:
-            controller.tryAutoLogin() ? '/homeScreen' : '/welcomeScreen',
-        getPages: [
-          GetPage(
-            name: '/welcomeScreen',
-            page: () => const WelcomeScreen(),
-            binding: WelcomeBinding(),
-          ),
-          GetPage(
-            name: '/homeScreen',
-            page: () => const MainScreen(),
-            binding: MainBinding(),
-          ),
-        ],
-        defaultTransition: Transition.fadeIn,
-      ),
+      builder: (controller) {
+        return GetMaterialApp(
+          debugShowCheckedModeBanner: false,
+          theme: Themes.lightTheme,
+          darkTheme: Themes.darkTheme,
+          themeMode: themeController.theme,
+          initialRoute:
+              controller.tryAutoLogin() ? '/homeScreen' : '/welcomeScreen',
+          getPages: [
+            GetPage(
+              name: '/welcomeScreen',
+              page: () => const WelcomeScreen(),
+              binding: WelcomeBinding(),
+            ),
+            GetPage(
+              name: '/homeScreen',
+              page: () => const MainScreen(),
+              binding: MainBinding(),
+            ),
+          ],
+          defaultTransition: Transition.fadeIn,
+        );
+      },
     );
   }
 }

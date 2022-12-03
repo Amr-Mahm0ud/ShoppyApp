@@ -45,7 +45,7 @@ class EditProfile extends StatelessWidget {
                   label: 'Enter your name',
                   icon: Icons.person,
                   validator: (val) {
-                    if (controller.userName == null && val!.isEmpty) {
+                    if (val!.isEmpty) {
                       return 'You should enter a name';
                     }
                     return null;
@@ -63,10 +63,9 @@ class EditProfile extends StatelessWidget {
                   label: 'Enter your phone number',
                   icon: Icons.phone,
                   validator: (val) {
-                    if (controller.phoneNum == null && val!.isEmpty) {
+                    if (val!.isEmpty) {
                       return 'You should enter your phone num';
-                    } else if (controller.phoneNum == null &&
-                        val!.length != 11) {
+                    } else if (val.length != 11) {
                       return 'phone number is not valid';
                     }
                     return null;

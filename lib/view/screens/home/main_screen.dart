@@ -219,8 +219,8 @@ class MainScreen extends StatelessWidget {
               ),
               BottomNavigationBarItem(
                 icon: Icon(controller.currentPage.value == 3
-                    ? Icons.person_rounded
-                    : Icons.person_outline_rounded),
+                    ? Icons.settings_rounded
+                    : Icons.settings_outlined),
                 label: 'Profile',
               ),
             ],

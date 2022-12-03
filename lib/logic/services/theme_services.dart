@@ -5,9 +5,10 @@ import 'package:get_storage/get_storage.dart';
 class ThemeController extends GetxController {
   final GetStorage _box = GetStorage();
   final _key = 'isDarkMode';
-  RxBool isDark = false.obs;
 
   ThemeMode get theme => _loadThemeFromBox() ? ThemeMode.dark : ThemeMode.light;
+
+  RxBool isDark = false.obs;
 
   bool _loadThemeFromBox() {
     return _box.read(_key) ?? false;

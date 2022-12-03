@@ -13,22 +13,24 @@ class WishListScreen extends StatelessWidget {
     final controller = Get.find<ProductController>();
     return Obx(
       () => controller.favorites.isEmpty
-          ? Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Lottie.asset(
-                  'assets/lotties/empty_bag.json',
-                  width: Get.width * 0.75,
-                ),
-                const SizedBox(height: 20),
-                Text(
-                  'Your wishlist is empty \n discover products to add some',
-                  style: Get.textTheme.headline6!
-                      .copyWith(color: Get.textTheme.headline4!.color),
-                  textAlign: TextAlign.center,
-                ),
-              ],
-            )
+          ? Center(
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Lottie.asset(
+                    'assets/lotties/empty_bag.json',
+                    width: Get.width * 0.7,
+                  ),
+                  const SizedBox(height: 20),
+                  Text(
+                    'Your wishlist is empty \n discover products to add some',
+                    style: Get.textTheme.headline6!
+                        .copyWith(color: Get.textTheme.headline4!.color),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+          )
           : Padding(
               padding: EdgeInsets.only(
                 bottom: MediaQuery.of(context).padding.bottom,

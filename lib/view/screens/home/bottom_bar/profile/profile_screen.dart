@@ -24,6 +24,10 @@ class ProfileScreen extends StatelessWidget {
             children: [
               CircleAvatar(
                 radius: Get.width * 0.13,
+                backgroundColor: Get.theme.cardColor,
+                backgroundImage: AssetImage(
+                  Consts.profilePictures[controller.selectedImage.value],
+                ),
               ),
               const SizedBox(width: 10),
               Column(
@@ -37,8 +41,8 @@ class ProfileScreen extends StatelessWidget {
                             ? Colors.white
                             : Colors.black),
                   ),
-                  const Text('User Name'),
-                  const Text('Phone num'),
+                  Text(controller.userName ?? 'User Name'),
+                  Text(controller.phoneNum ?? ''),
                 ],
               ),
             ],
@@ -87,7 +91,9 @@ class ProfileScreen extends StatelessWidget {
                 : Icons.dark_mode_outlined),
             trailing: Switch.adaptive(
               value: themeController.isDark.value,
-              onChanged: (val) {},
+              onChanged: (val) {
+                themeController.switchTheme();
+              },
             ),
           ),
           //language (UI Only)
