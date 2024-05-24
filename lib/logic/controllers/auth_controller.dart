@@ -127,7 +127,7 @@ class AuthController extends GetxController {
   }) async {
     try {
       Uri url = Uri.parse(
-          'https://identitytoolkit.googleapis.com/v1/accounts:$urlSign?key=$apiKey');
+          'https://identitytoolkit.googleapis.com/v1/accounts:$urlSign?key=${AppKeys.authKey}');
       final response = await http.post(
         url,
         body: json.encode(
@@ -202,7 +202,7 @@ class AuthController extends GetxController {
     try {
       animateLoading();
       Uri url = Uri.parse(
-          'https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=$apiKey');
+          'https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=${AppKeys.authKey}');
       final response = await http.post(
         url,
         body: {
