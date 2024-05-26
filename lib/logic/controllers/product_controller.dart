@@ -63,17 +63,7 @@ class ProductController extends GetxController {
   TextEditingController searchController = TextEditingController();
   RxList<ProductModel> searchResult = <ProductModel>[].obs;
 
-  findProductByName(String name) {
-    searchResult.value = allProducts
-        .where((element) =>
-            element.title.toLowerCase().contains(name.toLowerCase()))
-        .toList();
-    update();
-  }
-
   clearSearch() {
     searchController.clear();
-    findProductByName('');
-    update();
   }
 }

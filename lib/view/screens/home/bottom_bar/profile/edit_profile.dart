@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:shoppy/bindings/main_binding.dart';
 import 'package:shoppy/utils/consts.dart';
-import 'package:shoppy/view/screens/home/bottom_bar/profile/profile_screen.dart';
 import 'package:shoppy/view/screens/home/main_screen.dart';
 import 'package:shoppy/view/widgets/auth/input_field.dart';
 import 'package:shoppy/view/widgets/bouncing_animation.dart';

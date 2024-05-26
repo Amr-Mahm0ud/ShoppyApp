@@ -6,9 +6,14 @@ import 'package:shoppy/view/widgets/product/product_tile.dart';
 
 import '../../../../utils/consts.dart';
 
-class DiscoverScreen extends StatelessWidget {
+class DiscoverScreen extends StatefulWidget {
   const DiscoverScreen({Key? key}) : super(key: key);
 
+  @override
+  State<DiscoverScreen> createState() => _DiscoverScreenState();
+}
+
+class _DiscoverScreenState extends State<DiscoverScreen> {
   @override
   Widget build(BuildContext context) {
     ProductController controller = Get.find();
@@ -48,18 +53,27 @@ class DiscoverScreen extends StatelessWidget {
                           ? null
                           : IconButton(
                               onPressed: () {
-                                controller.clearSearch();
+                                setState(() {
+                                  controller.clearSearch();
+                                });
                               },
                               icon: const Icon(Icons.clear),
                             ),
                     ),
                     onChanged: (searchVal) {
-                      controller.findProductByName(searchVal);
+                      setState(() {});
                     },
                   ),
                 ),
                 if (controller.searchController.text.isNotEmpty &&
-                    controller.searchResult.isEmpty)
+                    (controller.allProducts
+                        .where((element) => element.title
+                            .toLowerCase()
+                            .contains(controller.searchController.text
+                                .trim()
+                                .toLowerCase()))
+                        .toList()
+                        .isEmpty))
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: Get.height * 0.2),
                     child: Lottie.asset(
@@ -70,14 +84,15 @@ class DiscoverScreen extends StatelessWidget {
                 else ...[
                   SizedBox(height: Get.height * 0.02),
                   Column(
-                    children: (controller.searchController.text.isNotEmpty &&
-                            controller.searchResult.isNotEmpty)
-                        ? controller.searchResult
-                            .map((product) => ProductTile(product: product))
-                            .toList()
-                        : controller.allProducts
-                            .map((product) => ProductTile(product: product))
-                            .toList(),
+                    children: controller.allProducts
+                        .where((element) => element.title
+                            .toLowerCase()
+                            .contains(controller.searchController.text
+                                .trim()
+                                .toLowerCase()))
+                        .toList()
+                        .map((product) => ProductTile(product: product))
+                        .toList(),
                   )
                 ]
               ],
