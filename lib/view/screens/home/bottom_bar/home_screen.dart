@@ -44,9 +44,17 @@ class HomeScreen extends StatelessWidget {
                       border: Border.all(color: Get.theme.cardColor),
                       borderRadius: BorderRadius.circular(Consts.borderRadius),
                     ),
-                    padding: const EdgeInsets.all(5),
-                    child: Image.asset(
-                        categoriesController.categoriesImages[index]),
+                    alignment: Alignment.center,
+                    padding: const EdgeInsets.all(7),
+                    child: Text(
+                      categoriesController.allCategories[index],
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodySmall!
+                          .copyWith(fontWeight: FontWeight.bold),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
                 ),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -64,9 +72,9 @@ class HomeScreen extends StatelessWidget {
             ),
             productController.allProducts.isEmpty
                 ? SizedBox(
-                    height: Get.height * 0.27,
+                    height: Get.height * 0.3,
                     child: Container(
-                      height: Get.height * 0.27,
+                      height: Get.height * 0.3,
                       width: Get.width * 0.9,
                       decoration: BoxDecoration(
                         color: Get.theme.cardColor,

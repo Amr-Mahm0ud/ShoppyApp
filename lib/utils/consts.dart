@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -43,18 +42,16 @@ class Consts {
     'assets/images/8.png',
   ];
 
-  static final String kApiUrl = defaultTargetPlatform == TargetPlatform.android
-      ? 'http://10.0.2.2:4242'
-      : 'http://localhost:4242';
+  // static const String kApiUrl = 'http://localhost:4242';
 
   static final TextStyle customButtonTextStyle =
-      Get.textTheme.headline6!.copyWith(color: Colors.white);
+      Get.textTheme.titleLarge!.copyWith(color: Colors.white);
 
   static errorSnackBar(message) {
     Get.snackbar(
       'Error',
       message,
-      backgroundColor: Get.theme.errorColor.withOpacity(0.8),
+      backgroundColor: Get.theme.colorScheme.error.withOpacity(0.8),
       barBlur: 10,
       borderRadius: Consts.borderRadius,
       colorText: Colors.white,

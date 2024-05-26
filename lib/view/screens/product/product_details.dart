@@ -75,7 +75,6 @@ class ProductDetails extends StatelessWidget {
                               decoration: BoxDecoration(
                                 border: Border.all(
                                   color: Get.theme.backgroundColor,
-                                  strokeAlign: StrokeAlign.outside,
                                   width: 2,
                                 ),
                                 color: Get.theme.errorColor,
@@ -485,6 +484,7 @@ class ProductDetails extends StatelessWidget {
                           ),
                         ),
                       ),
+                      const SizedBox(height: 10),
                       AnimatedSwitcher(
                         duration: const Duration(milliseconds: 500),
                         child:

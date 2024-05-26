@@ -30,17 +30,16 @@ class ProductCard extends StatelessWidget {
         );
       },
       child: Container(
+        width: Get.width * 0.45,
         decoration: BoxDecoration(
           border: Border.all(color: Get.theme.cardColor),
           borderRadius: BorderRadius.circular(Consts.borderRadius),
         ),
-        height: Get.height * 0.27,
-        width: Get.width * 0.5,
+        alignment: Alignment.center,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              width: double.infinity,
               height: Get.height * 0.15,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(
@@ -52,7 +51,7 @@ class ProductCard extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -71,30 +70,33 @@ class ProductCard extends StatelessWidget {
                   const SizedBox(height: 10),
                   Row(
                     children: [
-                      Text(
-                        "\$${product.price}",
-                        style: Get.textTheme.bodyText1!
-                            .copyWith(color: Get.theme.primaryColor),
-                      ),
-                      const SizedBox(width: 5),
-                      if (product.discountPercentage > 15)
-                        Text(
-                          "\$${(product.price + (product.price * product.discountPercentage / 100)).floor()}",
-                          style: Get.textTheme.bodySmall!.copyWith(
-                            decoration: TextDecoration.lineThrough,
-                            decorationThickness: 2,
-                            decorationStyle: TextDecorationStyle.solid,
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          if (product.discountPercentage > 15)
+                            Text(
+                              "\$${(product.price + (product.price * product.discountPercentage / 100)).floor()}",
+                              style: Get.textTheme.bodySmall!.copyWith(
+                                decoration: TextDecoration.lineThrough,
+                                decorationThickness: 2,
+                                decorationStyle: TextDecorationStyle.solid,
+                              ),
+                            ),
+                          const SizedBox(width: 5),
+                          Text(
+                            "\$${product.price}",
+                            style: Get.textTheme.bodyText1!
+                                .copyWith(color: Get.theme.primaryColor),
                           ),
-                        ),
+                        ],
+                      ),
                       const Spacer(),
                       Obx(
-                        () => IconButton(
-                          padding: EdgeInsets.zero,
-                          constraints: const BoxConstraints(),
-                          icon: controller.isFavorite(product.id)
+                        () => InkWell(
+                          child: controller.isFavorite(product.id)
                               ? const Icon(Icons.favorite)
                               : const Icon(Icons.favorite_outline),
-                          onPressed: () {
+                          onTap: () {
                             controller.isFavorite(product.id)
                                 ? controller.removeFromFavorite(product.id)
                                 : controller.addToFavorite(product.id);
@@ -103,10 +105,8 @@ class ProductCard extends StatelessWidget {
                       ),
                       const SizedBox(width: 15),
                       Obx(
-                        () => IconButton(
-                          padding: EdgeInsets.zero,
-                          constraints: const BoxConstraints(),
-                          icon: AnimatedCrossFade(
+                        () => InkWell(
+                          child: AnimatedCrossFade(
                             firstChild:
                                 const Icon(Icons.add_shopping_cart_outlined),
                             crossFadeState: cartController.cartItems.any(
@@ -118,7 +118,7 @@ class ProductCard extends StatelessWidget {
                             secondChild:
                                 const Icon(Icons.shopping_cart_outlined),
                           ),
-                          onPressed: () {
+                          onTap: () {
                             cartController.animateShaking();
                             cartController.addToCart(
                               item: product,
@@ -134,7 +134,6 @@ class ProductCard extends StatelessWidget {
                 ],
               ),
             ),
-            const Spacer()
           ],
         ),
       ),

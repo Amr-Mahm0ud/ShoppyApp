@@ -75,7 +75,6 @@ class MainScreen extends StatelessWidget {
                                     decoration: BoxDecoration(
                                       border: Border.all(
                                         color: Get.theme.backgroundColor,
-                                        strokeAlign: StrokeAlign.outside,
                                         width: 2,
                                       ),
                                       color: Get.theme.errorColor,
@@ -120,12 +119,8 @@ class MainScreen extends StatelessWidget {
                         shrinkWrap: true,
                         scrollDirection: Axis.horizontal,
                         itemCount: 8,
-                        itemBuilder: (context, index) => Card(
-                          elevation: 0,
-                          shape: RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.circular(Consts.borderRadius),
-                          ),
+                        itemBuilder: (context, index) => Container(
+                          decoration: decoration,
                         ),
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(

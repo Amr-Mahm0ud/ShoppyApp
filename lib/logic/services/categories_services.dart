@@ -5,7 +5,6 @@ import 'package:shoppy/utils/consts.dart';
 
 import '../../model/product_model.dart';
 
-
 class CategoriesServices {
   static Future<List<String>> getAllCategories() async {
     try {
@@ -40,7 +39,7 @@ class CategoriesServices {
 }
 
 List<String> categoryModelFromJson(String str) =>
-    List<String>.from(json.decode(str).map((x) => x));
+    List<String>.from(json.decode(str).map((x) => x['name'].toString()));
 
 String categoryModelToJson(List<String> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x)));

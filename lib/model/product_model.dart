@@ -24,7 +24,7 @@ class ProductModel {
   int id;
   String title;
   String description;
-  int price;
+  double price;
   double discountPercentage;
   double rating;
   int stock;
@@ -34,16 +34,16 @@ class ProductModel {
   List<String> images;
 
   factory ProductModel.fromJson(Map<String, dynamic> json) => ProductModel(
-        id: json["id"],
-        title: json["title"],
-        description: json["description"],
-        price: json["price"],
-        discountPercentage: json["discountPercentage"].toDouble(),
-        rating: json["rating"].toDouble(),
-        stock: json["stock"],
-        brand: json["brand"],
-        category: json["category"],
-        thumbnail: json["thumbnail"],
+        id: json["id"] ?? 0,
+        title: json["title"] ?? '',
+        description: json["description"] ?? '',
+        price: json["price"] ?? '',
+        discountPercentage: json["discountPercentage"].toDouble() ?? 0.0,
+        rating: json["rating"].toDouble() ?? 0.0,
+        stock: json["stock"] ?? 0,
+        brand: json["brand"] ?? '',
+        category: json["category"] ?? '',
+        thumbnail: json["thumbnail"] ,
         images: List<String>.from(json["images"].map((x) => x)),
       );
 

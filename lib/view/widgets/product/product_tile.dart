@@ -68,7 +68,7 @@ class ProductTile extends StatelessWidget {
                     Text(
                       product.title,
                       overflow: TextOverflow.ellipsis,
-                      maxLines: 2,
+                      maxLines: 1,
                       style: Get.textTheme.titleMedium!
                           .copyWith(fontWeight: FontWeight.bold),
                     ),

@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:shoppy/bindings/main_binding.dart';
 import 'package:shoppy/bindings/welcome_binding.dart';
+import 'package:shoppy/firebase_options.dart';
 import 'package:shoppy/logic/controllers/auth_controller.dart';
 import 'package:shoppy/view/screens/home/main_screen.dart';
 import '/utils/themes.dart';
@@ -17,7 +18,9 @@ void main() async {
   SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
   await GetStorage.init();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   Get.put(AuthController());
   Get.put(ThemeController());
   runApp(const MyApp());
