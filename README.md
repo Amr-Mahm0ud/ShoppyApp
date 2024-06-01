@@ -1,16 +1,23 @@
-# shoppy
+# ShoppyApp
+ShoppyApp is an e-commerce application built with Flutter, utilizing GetX for state management and Firebase for backend services. This project aims to provide a robust and scalable solution for online shopping platforms.
 
-A new Flutter project.
+<h1>Video Preview</h1>
 
-## Getting Started
+![previews/video.mp4](https://github.com/Amr-Mahm0ud/ShoppyApp/blob/master/previews/video.mp4)
 
-This project is a starting point for a Flutter application.
+# Features
+User Authentication (Firebase Auth)
+Real-time Database (Firebase Firestore)
+State Management with GetX
+Product Browsing and Search
+Shopping Cart Functionality
+Order Management
+Getting Started
+To get started with ShoppyApp, ensure you have Flutter installed. Clone the repository and run the following commands:
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+bash
+Copy code
+flutter pub get
+flutter run
+Contributing
+Contributions are welcome! Please fork the repository and submit a pull request for any features or bug fixes.
