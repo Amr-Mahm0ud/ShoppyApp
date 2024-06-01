@@ -3,7 +3,8 @@ ShoppyApp is an e-commerce application built with Flutter, utilizing GetX for st
 
 <h1>Video Preview</h1>
 
-![previews/video.mp4](https://github.com/Amr-Mahm0ud/ShoppyApp/blob/master/previews/video.mp4)
+![previews/video.mp4]([https://github.com/Amr-Mahm0ud/ShoppyApp/blob/master/previews/video.mp4](https://github.com/Amr-Mahm0ud/ShoppyApp/assets/70074221/82a9f01c-4fd4-4502-91b5-b8e69e3296af
+)
 
 # Features
 User Authentication (Firebase Auth)
